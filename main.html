@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Главная</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Главная</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<canvas id="hud-bg"></canvas>
-
-<div class="panel">
-  <h2>Ваш статус</h2>
-  <div id="info"></div>
+<body class="center">
+<div class="panel metal">
+  <h1>Главная</h1>
+  <p>Ваш ник и баллы</p>
   <button onclick="location.href='leaderboard.html'">Лидерборд</button>
+  <button id="checkRole">Проверить</button>
 </div>
 
 <script type="module">
 import { auth, db } from "./firebase.js";
 import { guard } from "./authGuard.js";
-import { doc,getDoc,collection,getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-guard();
+guard({ requireVerified: true });
 
-const me=await getDoc(doc(db,"users",auth.currentUser.uid));
-const snap=await getDocs(collection(db,"users"));
-
-const sorted=snap.docs.map(d=>d.data())
-  .filter(u=>u.situation==="verified")
-  .sort((a,b)=>b.points-a.points);
-
-let place=sorted.findIndex(u=>u.uid===auth.currentUser.uid)+1;
-
-info.innerHTML=`
-  Баллы: ${me.data().points}<br>
-  Место: ${place}
-`;
+document.getElementById("checkRole").onclick = async () => {
+  const snap = await getDoc(doc(db, "users", auth.currentUser.uid));
+  const u = snap.data();
+  if (u.role === "moderator") location.href = "moderator.html";
+  else if (u.role === "elder") location.href = "elder.html";
+  else alert("Ошибка: модерки нет");
+};
 </script>
 
-<script src="hudBackground.js"></script>
 </body>
 </html>
