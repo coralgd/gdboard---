@@ -9,29 +9,27 @@
 <div id="list"></div>
 
 <script type="module">
-import { guard } from "./authGuard.js";
 import { auth, db } from "./firebase.js";
+import { guard } from "./authGuard.js";
 import { collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-guard({ requireVerified: true, role: "moderator" });
+guard({ requireVerified:true, role:"moderator" });
 
 const list = document.getElementById("list");
-const snap = await getDocs(collection(db, "users"));
+const snap = await getDocs(collection(db,"users"));
 
-snap.forEach(docSnap => {
+snap.forEach(docSnap=>{
   const u = docSnap.data();
-  if(u.role === "moderator" || u.role === "elder") return;
+  if(u.role==="moderator"||u.role==="elder") return;
 
-  const div = document.createElement("div");
-  div.className = "panel metal";
-  div.innerHTML = `
+  const div=document.createElement("div");
+  div.className="panel metal";
+  div.innerHTML=`
     <strong>${u.nick || u.email}</strong>
     <input type="number" value="${u.points || 0}">
     <button>Изменить</button>
   `;
-  div.querySelector("button").onclick = () =>
-    updateDoc(docSnap.ref, { points: Number(div.querySelector("input").value) });
-
+  div.querySelector("button").onclick=()=>updateDoc(docSnap.ref,{points:Number(div.querySelector("input").value)});
   list.appendChild(div);
 });
 </script>
