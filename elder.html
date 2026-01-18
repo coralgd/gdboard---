@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Старший модератор</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
 <body>
-<canvas id="hud-bg"></canvas>
 
-<div class="panel" id="list"></div>
+<h2>Панель старшего модератора</h2>
+<div id="list"></div>
 
 <script type="module">
 import { db } from "./firebase.js";
 import { guard } from "./authGuard.js";
-import { collection,getDocs,updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  collection,
+  getDocs,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 guard("elder");
 
-const snap = await getDocs(collection(db,"users"));
+const snap = await getDocs(collection(db, "users"));
+const list = document.getElementById("list");
 
-snap.forEach(d=>{
-  const u=d.data();
-  const row=document.createElement("div");
-  row.className="row";
+snap.forEach(docSnap => {
+  const u = docSnap.data();
 
-  row.innerHTML=`
-    <div>#</div>
-    <div>${u.nick}</div>
-    <input type="number" value="${u.points||0}">
-    <button>${u.situation==="verified"?"Снять вериф":"Верифицировать"}</button>
+  const div = document.createElement("div");
+  div.innerHTML = `
+    ${u.nick || u.email}
+    <input type="number" value="${u.points || 0}">
+    <button class="points">Баллы</button>
+    <button class="verify">${u.situation === "verified" ? "Снять верификацию" : "Верифицировать"}</button>
+    <button class="mod">${u.role === "moderator" ? "Снять модера" : "Назначить модером"}</button>
   `;
 
-  row.querySelector("input").onchange=e=>{
-    updateDoc(d.ref,{points:+e.target.value});
-  };
+  div.querySelector(".points").onclick = () =>
+    updateDoc(docSnap.ref, { points: Number(div.querySelector("input").value) });
 
-  row.querySelector("button").onclick=()=>{
-    updateDoc(d.ref,{
-      situation:u.situation==="verified"?"blocked":"verified"
+  div.querySelector(".verify").onclick = () =>
+    updateDoc(docSnap.ref, {
+      situation: u.situation === "verified" ? "blocked" : "verified"
     });
-  };
 
-  list.append(row);
+  div.querySelector(".mod").onclick = () =>
+    updateDoc(docSnap.ref, {
+      role: u.role === "moderator" ? "player" : "moderator"
+    });
+
+  list.appendChild(div);
 });
 </script>
 
-<script src="hudBackground.js"></script>
 </body>
 </html>
