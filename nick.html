@@ -15,13 +15,12 @@
 
 <script type="module">
 import { auth, db } from "./firebase.js";
-import { doc, updateDoc } from
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 save.onclick = async () => {
-  await updateDoc(doc(db, "users", auth.currentUser.uid), {
-    nick: nick.value,
-    situation: "requested"
+  await updateDoc(doc(db,"users",auth.currentUser.uid),{
+    nick:nick.value,
+    situation:"requested"
   });
   alert("Ник отправлен на проверку");
 };
