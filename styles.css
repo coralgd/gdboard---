@@ -1,10 +1,8 @@
 body {
   margin:0;
-  font-family: "Segoe UI", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   color:#cfefff;
-  background:
-    radial-gradient(circle at center, #0d1b2a, #05080f),
-    repeating-linear-gradient(0deg, rgba(0,255,255,0.05) 0px, rgba(0,255,255,0.05) 1px, transparent 1px, transparent 40px);
+  background: linear-gradient(180deg,#0d1b2a,#05080f);
 }
 
 .center {
@@ -26,19 +24,16 @@ body {
   background: radial-gradient(circle at center, rgba(255,255,255,0.12), rgba(0,0,0,0.4)), linear-gradient(180deg,#1c2f44,#0b1520);
 }
 
-button {
-  margin-top:8px;
-  padding:8px 12px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#222;
-  color:#fff;
+input, button {
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  background:#0b1c2d;
+  border:1px solid #1e4f7a;
+  color:#cfefff;
+  border-radius:5px;
 }
 
-button:hover { box-shadow:0 0 12px rgba(255,255,255,0.2); }
+button:hover { background:#153b5f; cursor:pointer; }
 
-.danger {
-  background:#400;
-  box-shadow: inset 0 0 12px rgba(255,0,0,0.6);
-}
+.danger { background:#400; box-shadow: inset 0 0 12px rgba(255,0,0,0.6); }
