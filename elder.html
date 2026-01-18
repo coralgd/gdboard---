@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Старший модератор</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="hud-bg"></canvas>
+
+<div class="panel" id="list"></div>
+
+<script type="module">
+import { db } from "./firebase.js";
+import { guard } from "./authGuard.js";
+import { collection,getDocs,updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+guard("elder");
+
+const snap = await getDocs(collection(db,"users"));
+
+snap.forEach(d=>{
+  const u=d.data();
+  const row=document.createElement("div");
+  row.className="row";
+
+  row.innerHTML=`
+    <div>#</div>
+    <div>${u.nick}</div>
+    <input type="number" value="${u.points||0}">
+    <button>${u.situation==="verified"?"Снять вериф":"Верифицировать"}</button>
+  `;
+
+  row.querySelector("input").onchange=e=>{
+    updateDoc(d.ref,{points:+e.target.value});
+  };
+
+  row.querySelector("button").onclick=()=>{
+    updateDoc(d.ref,{
+      situation:u.situation==="verified"?"blocked":"verified"
+    });
+  };
+
+  list.append(row);
+});
+</script>
+
+<script src="hudBackground.js"></script>
+</body>
+</html>
