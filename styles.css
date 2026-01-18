@@ -1,63 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
-
-* {
-  box-sizing: border-box;
-  font-family: Orbitron, sans-serif;
-  color: #cfefff;
-}
-
 body {
-  margin: 0;
-  background: radial-gradient(circle at center, #0c1c2b, #05080d);
-  overflow: hidden;
+  margin:0;
+  font-family: "Segoe UI", sans-serif;
+  color:#cfefff;
+  background:
+    radial-gradient(circle at center, #0d1b2a, #05080f),
+    repeating-linear-gradient(0deg, rgba(0,255,255,0.05) 0px, rgba(0,255,255,0.05) 1px, transparent 1px, transparent 40px);
 }
 
-canvas#hud-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+.center {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
 .panel {
-  position: relative;
-  z-index: 1;
-  max-width: 1000px;
-  margin: 60px auto;
-  padding: 24px;
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%),
-    linear-gradient(145deg, #0b1f30, #08131d);
-  border: 1px solid rgba(0,180,255,0.35);
-  box-shadow: inset 0 0 40px rgba(0,180,255,0.15);
+  padding:20px;
+  margin:10px;
+  border-radius:10px;
+  background: linear-gradient(180deg,#1b2d3f,#0e1620);
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.08), 0 0 40px rgba(0,150,255,0.15);
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 50px 1fr 120px 240px;
-  align-items: center;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 65%),
-    linear-gradient(180deg, #0f2b40, #0a1b29);
-  border-left: 3px solid rgba(0,180,255,0.5);
-}
-
-.row.elder {
-  border-left-color: red;
-}
-
-.row.moderator {
-  border-left-color: orange;
+.metal {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.12), rgba(0,0,0,0.4)), linear-gradient(180deg,#1c2f44,#0b1520);
 }
 
 button {
-  background: linear-gradient(145deg, #0b314a, #061a26);
-  border: 1px solid rgba(0,180,255,0.5);
-  padding: 6px 12px;
-  cursor: pointer;
+  margin-top:8px;
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#222;
+  color:#fff;
 }
 
-button:hover {
-  background: linear-gradient(145deg, #0f4b6e, #0a2638);
+button:hover { box-shadow:0 0 12px rgba(255,255,255,0.2); }
+
+.danger {
+  background:#400;
+  box-shadow: inset 0 0 12px rgba(255,0,0,0.6);
 }
