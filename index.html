@@ -1,43 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>GD Board — Вход</title>
-<link rel="stylesheet" href="styles.css">
+<title>GD Board — Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="center">
+<body>
+<canvas id="grid"></canvas>
 
-<div class="panel metal">
-  <h1>GD Board</h1>
+<div class="panel">
+  <h1>GD BOARD</h1>
   <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Пароль">
-  <button id="login">Войти</button>
-  <button id="register">Регистрация</button>
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="login()">Войти</button>
+  <a href="register.html">Регистрация</a>
 </div>
 
-<script type="module">
-import { auth, db } from "./firebase.js";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-login.onclick = async () => {
-  await signInWithEmailAndPassword(auth,email.value,password.value);
-  location.href="main.html";
-};
-
-register.onclick = async () => {
-  const cred = await createUserWithEmailAndPassword(auth,email.value,password.value);
-
-  await setDoc(doc(db,"users",cred.user.uid),{
-    nick:"",
-    points:0,
-    role:"player",
-    situation:"not_verified"
-  });
-
-  location.href="nick.html";
-};
-</script>
-
+<script type="module" src="firebase.js"></script>
+<script type="module" src="auth.js"></script>
+<script src="grid.js"></script>
 </body>
 </html>
