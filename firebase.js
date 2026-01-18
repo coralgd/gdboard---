@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyB7QbVxGHR7Qm8o8Wzl_wxsCpzMUdS5rws",
   authDomain: "gdboard-add4a.firebaseapp.com",
   projectId: "gdboard-add4a",
-  storageBucket: "gdboard-add4a.appspot.com",
+  storageBucket: "gdboard-add4a.firebasestorage.app",
   messagingSenderId: "883125028740",
   appId: "1:883125028740:web:c504de4139943b8606bfd1"
 };
