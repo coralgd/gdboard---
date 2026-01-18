@@ -10,14 +10,19 @@ export function guard(requiredRole = null) {
     }
 
     const snap = await getDoc(doc(db, "users", user.uid));
-    const data = snap.data();
+    if (!snap.exists()) {
+      location.href = "index.html";
+      return;
+    }
 
-    if (data.situation !== "verified") {
+    const u = snap.data();
+
+    if (u.situation !== "verified") {
       location.href = "blocked.html";
       return;
     }
 
-    if (requiredRole && data.role !== requiredRole) {
+    if (requiredRole && u.role !== requiredRole) {
       location.href = "main.html";
     }
   });
